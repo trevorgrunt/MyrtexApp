@@ -1,0 +1,96 @@
+
+<h1 mb-3>Сотрудники</h1>
+<div class="d-flex">
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crudModal" (click)="AddModel()">Добавить сотрудника</button>
+</div>
+
+<table class="table table-bordered" *ngIf="employees && employees.length > 0">
+  <thead>
+    <tr>
+      <th scope="col" (click)="sort('id')">Id <i class="fa fa-sort"></i></th>
+      <th scope="col" (click)="sort('firstName')">Имя</th>
+      <th scope="col" (click)="sort('secondName')">Фамилия</th>
+      <th scope="col" (click)="sort('surname')">Отчество</th>
+      <th scope="col" (click)="sort('salary')">Зарплата</th> 
+      <th scope="col" (click)="sort('department')">Отдел</th>
+      <th scope="col" (click)="sort('dateOfBirth')">Дата рождения</th>
+      <th scope="col" (click)="sort('dateOfHire')">Дата найма</th>
+      <th scope="col">Действие</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees | orderBy: key: reverse">
+      <td scope="row">{{employee.id}}</td>
+      <td scope="row">{{employee.firstName}}</td>
+      <td scope="row">{{employee.secondName}}</td>
+      <td scope="row">{{employee.surname}}</td>
+      <td scope="row">{{employee.salary}}</td>
+      <td scope="row">{{employee.department}}</td>
+      <td scope="row">{{employee.dateOfBirth}}</td>
+      <td scope="row">{{employee.dateOfHire}}</td>
+      <td>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#crudModal" (click)="EditEmployee(employee.id,employee)">Изменить</button>&nbsp;
+        <button class="btn btn-danger" (click)="DeleteEmployee(employee.id,employee)">Удалить</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="!employees || employees.length <= 0">Не найдены сотрудники</p>
+
+<div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: yellowgreen">
+        <h5 style="color: white" class="modal-title" id="crudModalLabel">{{isedit ? 'Изменить данные' : 'Добавить сотрудника'}}</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="employeeform" #form='ngForm' (ngSubmit)="isedit ? UpdateEmployee(addEmployeeRequest) : AddEmployee()">
+          <div class="form-group mb-2">
+            <label for="firstName">Имя</label>
+            <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="Иван"
+                   name="firstName" [(ngModel)]="addEmployeeRequest.firstName" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="secondName">Фамилия</label>
+            <input type="text" class="form-control" formControlName="secondName" id="secondName" placeholder="Иванов"
+                   name="secondName" [(ngModel)]="addEmployeeRequest.secondName" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="surname">Отчество</label>
+            <input type="text" class="form-control" formControlName="surname" id="surname" placeholder="Иванович"
+                   name="surname" [(ngModel)]="addEmployeeRequest.surname" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="salary">Зарплата</label>
+            <input type="number" class="form-control" formControlName="salary" id="salary" placeholder="40000"
+                   name="salary" [(ngModel)]="addEmployeeRequest.salary" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="department">Отдел</label>
+            <input type="text" class="form-control" formControlName="department" id="department" placeholder="Кадровый"
+                   name="department" [(ngModel)]="addEmployeeRequest.department" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="dateOfBirth">Дата рождения</label>
+            <input type="date" class="form-control" formControlName="dateOfBirth" id="dateofBirth"
+                   name="dateOfBirth" [(ngModel)]="addEmployeeRequest.dateOfBirth" />
+          </div>
+          <div class="form-group mb-2">
+            <label for="dateOfHire">Дата устройства на работу</label>
+            <input type="date" class="form-control" formControlName="dateOfHire" id="dateOfHire"
+                   name="dateOfHire" [(ngModel)]="addEmployeeRequest.dateOfHire" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">{{isedit ? 'Изменить' : 'Добавить'}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@angular/cdk": "^16.0.3",
+    "@angular/material": "^16.0.3",
+    "@syncfusion/ej2-angular-popups": "^21.2.4",
+    "bootstrap": "^5.3.0",
+    "ng2-order-pipe": "^0.1.5",
+    "ng2-search-filter": "^0.5.1",
+    "ngx-pagination": "^6.0.3"
+  }
+}
